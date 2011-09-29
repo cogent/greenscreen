@@ -29,18 +29,22 @@ module GreenScreen
       @projects = []
 
       servers.each do |server|
-        xml = REXML::Document.new(open(server["url"]))
-        projects = xml.elements["//Projects"]
+        begin
+          xml = REXML::Document.new(open(server["url"]))
+          projects = xml.elements["//Projects"]
 
-        projects.each do |project|
-          monitored_project = MonitoredProject.new(project)
-          if server["jobs"]
-            if server["jobs"].detect {|job| job == monitored_project.name}
+          projects.each do |project|
+            monitored_project = MonitoredProject.new(project)
+            if server["jobs"]
+              if server["jobs"].detect {|job| job == monitored_project.name}
+                @projects << monitored_project
+              end
+            else
               @projects << monitored_project
             end
-          else
-            @projects << monitored_project
           end
+        rescue => e
+          # skip this server
         end
       end
 
@@ -50,6 +54,7 @@ module GreenScreen
       @columns = 4.0 if @projects.size > 21
 
       @rows = (@projects.size / @columns).ceil
+      @rows = 1 if @rows.zero?
 
       erb :index
     end
