@@ -29,8 +29,9 @@ module GreenScreen
       @projects = []
 
       servers.each do |server|
+        cc_xml_url = server["url"]
         begin
-          xml = REXML::Document.new(open(server["url"]))
+          xml = REXML::Document.new(open(cc_xml_url))
           projects = xml.elements["//Projects"]
 
           projects.each do |project|
@@ -44,7 +45,7 @@ module GreenScreen
             end
           end
         rescue => e
-          # skip this server
+          $stderr.puts "ERROR loading #{cc_xml_url}"
         end
       end
 
@@ -57,6 +58,7 @@ module GreenScreen
       @rows = 1 if @rows.zero?
 
       erb :index
+
     end
 
   end
