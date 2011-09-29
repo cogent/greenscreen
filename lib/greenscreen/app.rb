@@ -53,5 +53,13 @@ module GreenScreen
 
     end
 
+    get '/test' do
+      xml = REXML::Document.new(open(File.expand_path("../test-cc.xml", __FILE__)))
+      @projects = xml.elements["//Projects"].map do |project_element|
+        MonitoredProject.new(project_element)
+      end
+      erb :index
+    end
+
   end
 end
