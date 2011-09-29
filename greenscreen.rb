@@ -2,8 +2,8 @@ require 'rubygems'
 require 'sinatra'
 require 'erb'
 require 'rexml/document'
-require 'hpricot'
 require 'open-uri'
+require 'yaml'
 
 get '/' do
   servers = YAML.load_file 'config.yml'
