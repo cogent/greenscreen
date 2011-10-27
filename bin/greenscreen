@@ -8,6 +8,10 @@ class GreenScreenCommand < Clamp::Command
 
   option ["-c", "--config"], "FILE", "config file", :attribute_name => :config_file, :default => "~/.greenscreen.yml"
 
+  option ["-p", "--port"], "PORT", "server port", :default => 3000 do |v|
+    Integer(v)
+  end
+
   def default_config_file
     ENV["HOME"] + "/.greenscreen.yml"
   end
@@ -20,7 +24,7 @@ class GreenScreenCommand < Clamp::Command
   end
 
   def execute
-    GreenScreen::App.run!(:port => 4567, :config => load_config)
+    GreenScreen::App.run!(:port => port, :config => load_config)
   end
 
 end
