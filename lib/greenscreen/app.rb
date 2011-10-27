@@ -27,6 +27,7 @@ module GreenScreen
       return "Add the details of build server to the config.yml file to get started" unless servers
 
       @projects = []
+      @auto_refresh_period = 15
 
       servers.each do |server|
         cc_xml_url = server["url"]
