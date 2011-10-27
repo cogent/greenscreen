@@ -21,5 +21,8 @@ EOT
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency "sinatra", "~> 1.2.0"
+  s.add_runtime_dependency "thin"
+  s.add_runtime_dependency "clamp", "~> 0.2.3"
+  s.add_runtime_dependency "hashie", ">= 1.2.0"
 
 end

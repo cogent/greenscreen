@@ -1,0 +1,13 @@
+# build-servers to monitor
+servers:
+
+  # all jobs from the local Jenkins server
+  -
+    url: http://localhost:8080/cc.xml
+
+  # specific jobs from another server
+  -
+    url: http://another.build.server:8080/cc.xml
+    jobs:
+      - roodi
+      - runway

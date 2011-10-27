@@ -1,4 +1,28 @@
 #! /usr/bin/env ruby
 
+require 'clamp'
+require 'hashie'
 require 'greenscreen/app'
-GreenScreen::App.run!(:port => 4567)
+
+class GreenScreenCommand < Clamp::Command
+
+  option ["-c", "--config"], "FILE", "config file", :attribute_name => :config_file, :default => "~/.greenscreen.yml"
+
+  def default_config_file
+    ENV["HOME"] + "/.greenscreen.yml"
+  end
+
+  def load_config
+    @config ||= begin
+      signal_usage_error("no such file: #{config_file.inspect}") unless File.exist?(config_file)
+      Hashie::Mash.new(YAML.load_file(config_file))
+    end
+  end
+
+  def execute
+    GreenScreen::App.run!(:port => 4567, :config => load_config)
+  end
+
+end
+
+GreenScreenCommand.run
