@@ -1,5 +1,5 @@
 # build-servers to monitor
-servers:
+sources:
 
   # all jobs from the local Jenkins server
   -

@@ -32,15 +32,15 @@ module GreenScreen
       @projects = []
       @auto_refresh_period = 15
 
-      settings.config.servers.each do |server|
+      settings.config.sources.each do |source|
         begin
-          xml = REXML::Document.new(open(server.url))
+          xml = REXML::Document.new(open(source.url))
           projects = xml.elements["//Projects"]
 
           projects.each do |project|
             monitored_project = MonitoredProject.new(project)
-            if server["jobs"]
-              if server["jobs"].detect {|job| job == monitored_project.name}
+            if source.jobs
+              if source.jobs.detect {|job| job == monitored_project.name}
                 @projects << monitored_project
               end
             else
@@ -48,7 +48,7 @@ module GreenScreen
             end
           end
         rescue => e
-          $stderr.puts "ERROR loading #{server.url}"
+          $stderr.puts "ERROR loading #{source.url}"
         end
       end
 
