@@ -5,23 +5,23 @@
       <meta http-equiv="refresh" content="<%= @auto_refresh_period %>" />
     <% end %>
     <link rel='stylesheet' href='/styles.css' type='text/css' media="screen">
-    <% unless @projects.empty? %>
+    <% unless @jobs.empty? %>
     <style type="text/css">
       .build {
-        height: <%= 100.0 / @projects.size %>%;
+        height: <%= 100.0 / @jobs.size %>%;
       }
     </style>
     <% end %>
   </head>
   <body>
-    <% @projects.each do |project| %>
-      <div class="build <%= project.last_build_status %> <%= project.activity %>">
+    <% @jobs.each do |job| %>
+      <div class="build <%= job.last_run.status %> <%= job.activity %>">
         <div class="border">
           <div class="content">
-            <h1><a href="<%= project.web_url%>"><%= project.name %></a></h1>
+            <h1><a href="<%= job.url %>"><%= job.name %></a></h1>
             <p>
-              Build <strong><%= project.last_build_label %></strong>
-              <%= project.last_build_time.strftime("@ %R on %a, %e %b") %>
+              Build <strong><%= job.last_run.label %></strong>
+              <%= job.last_run.time.strftime("@ %R on %a, %e %b") %>
             </p>
           </div>
         </div>

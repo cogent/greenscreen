@@ -7,20 +7,8 @@ require 'yaml'
 
 module GreenScreen
 
-  class MonitoredProject
-
-    attr_reader :name, :last_build_status, :activity, :last_build_time, :web_url, :last_build_label
-
-    def initialize(project)
-      @activity = project.attributes["activity"]
-      @last_build_time = Time.parse(project.attributes["lastBuildTime"]).localtime
-      @web_url = project.attributes["webUrl"]
-      @last_build_label = project.attributes["lastBuildLabel"]
-      @last_build_status = project.attributes["lastBuildStatus"].downcase
-      @name = project.attributes["name"]
-    end
-
-  end
+  Job = Struct.new(:name, :url, :activity, :last_run)
+  Run = Struct.new(:label, :time, :status)
 
   class App < Sinatra::Base
 
@@ -29,31 +17,43 @@ module GreenScreen
 
     get '/' do
 
-      @projects = []
       @auto_refresh_period = 15
 
-      settings.config.sources.each do |source|
-        begin
-          xml = REXML::Document.new(open(source.url))
-          projects = xml.elements["//Projects"]
-
-          projects.each do |project|
-            monitored_project = MonitoredProject.new(project)
-            if source.jobs
-              if source.jobs.detect {|job| job == monitored_project.name}
-                @projects << monitored_project
-              end
-            else
-              @projects << monitored_project
-            end
-          end
-        rescue => e
-          $stderr.puts "ERROR loading #{source.url}"
-        end
-      end
+      @jobs = settings.config.sources.map do |source|
+        load_source(source)
+      end.flatten
 
       erb :index
 
+    end
+
+    private
+
+    def load_source(source)
+      jobs = load_cc_xml(source.url)
+      if included_jobs = source.jobs
+        jobs = jobs.select { |j| included_jobs.member?(j.name) }
+      end
+      jobs
+    rescue => e
+      $stderr.puts "ERROR loading #{source.url.inspect}: #{e}"
+    end
+
+    def load_cc_xml(url)
+      xml = REXML::Document.new(open(url))
+      xml.elements["//Projects"].map do |project_element|
+        data = project_element.attributes
+        Job.new.tap do |job|
+          job.name = data["name"]
+          job.url = data["webUrl"]
+          job.activity = data["activity"]
+          job.last_run = Run.new.tap do |run|
+            run.label = data["lastBuildLabel"]
+            run.time = Time.parse(data["lastBuildTime"]).localtime
+            run.status = data["lastBuildStatus"]
+          end
+        end
+      end
     end
 
   end
