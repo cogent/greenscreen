@@ -60,5 +60,6 @@ a {
 }
 
 .building h1 {
+  text-decoration: blink;
   font-style: italic;
 }
