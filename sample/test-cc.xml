@@ -1,1 +1,20 @@
-<Projects><Project webUrl="http://jenkins.example.com/job/one/" name="one" lastBuildLabel="108" lastBuildTime="2011-09-28T07:15:16Z" lastBuildStatus="Success" activity="Sleeping"/><Project webUrl="http://jenkins.example.com/job/two/" name="two" lastBuildLabel="666" lastBuildTime="2011-02-15T09:00:13Z" lastBuildStatus="Failure" activity="Sleeping"/><Project webUrl="http://jenkins.example.com/job/three/" name="three" lastBuildLabel="666" lastBuildTime="2011-02-15T09:00:13Z" lastBuildStatus="Failure" activity="Building"/></Projects>
+<Projects>
+  <Project webUrl="http://jenkins.example.com/job/one/" name="one" lastBuildLabel="108"
+           lastBuildTime="2011-09-28T07:15:16Z" lastBuildStatus="Success" activity="Sleeping"/>
+  <Project webUrl="http://jenkins.example.com/job/two/" name="two" lastBuildLabel="666"
+           lastBuildTime="2011-02-15T09:00:13Z" lastBuildStatus="Failure" activity="Sleeping"/>
+  <Project webUrl="http://jenkins.example.com/job/three/" name="three" lastBuildLabel="666"
+           lastBuildTime="2011-02-15T09:00:13Z" lastBuildStatus="Failure" activity="Building"/>
+  <Project webUrl="http://jenkins.example.com/job/4/" name="four" lastBuildLabel="108"
+           lastBuildTime="2011-09-28T07:15:16Z" lastBuildStatus="Success" activity="Sleeping"/>
+  <Project webUrl="http://jenkins.example.com/job/5/" name="five" lastBuildLabel="666"
+           lastBuildTime="2011-02-15T09:00:13Z" lastBuildStatus="Failure" activity="Sleeping"/>
+  <Project webUrl="http://jenkins.example.com/job/6/" name="six" lastBuildLabel="666"
+           lastBuildTime="2011-02-15T09:00:13Z" lastBuildStatus="Failure" activity="Building"/>
+  <Project webUrl="http://jenkins.example.com/job/7/" name="seven" lastBuildLabel="108"
+           lastBuildTime="2011-09-28T07:15:16Z" lastBuildStatus="Success" activity="Sleeping"/>
+  <Project webUrl="http://jenkins.example.com/job/8/" name="eight" lastBuildLabel="666"
+           lastBuildTime="2011-02-15T09:00:13Z" lastBuildStatus="Failure" activity="Sleeping"/>
+  <Project webUrl="http://jenkins.example.com/job/9/" name="nine" lastBuildLabel="666"
+           lastBuildTime="2011-02-15T09:00:13Z" lastBuildStatus="Failure" activity="Building"/>
+</Projects>

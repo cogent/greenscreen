@@ -41,7 +41,7 @@ module GreenScreen
 
     def load_cc_xml(url)
       xml = REXML::Document.new(open(url))
-      xml.elements["//Projects"].map do |project_element|
+      xml.elements.to_a("Projects/Project").map do |project_element|
         data = project_element.attributes
         Job.new.tap do |job|
           job.name = data["name"]
